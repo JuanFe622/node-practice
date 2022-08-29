@@ -13,6 +13,7 @@ subject_routes.post('/subject', (req, res)=>{
         res.json(err);
       });
 });
+
 subject_routes.get('/', (req, res)=>{
     subject_model
     .find()

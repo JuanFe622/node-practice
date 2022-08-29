@@ -21,6 +21,7 @@ person_routes.post("/person", (req, res) => {
       res.json(err);
     });
 });
+
 person_routes.get("/", (req, res) => {
     person_model
     .find()
