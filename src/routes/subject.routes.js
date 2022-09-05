@@ -24,8 +24,30 @@ subject_routes.get('/', (req, res)=>{
         res.json(err);
       });
 });
-subject_routes.get('/:subjectId', (req, res)=>{})
-subject_routes.put('/:subjectId', (req, res)=>{})
-subject_routes.delete('/:subjectId', (req, res)=>{})
+
+subject_routes.get('/:subjectId', (req, res)=>{
+  const { subjectId } = req.params;
+  subject_model
+      .findById(subjectId)
+      .then((data) => res.json(data))
+      .catch((err) => res.json({message: err}));
+});
+
+subject_routes.put('/:subjectId', (req, res)=>{
+  const { subjectId } = req.params;
+  const { subject_name, code, credits, hours } = req.body;
+  subject_model
+    .updateOne({ _id: subjectId }, { $set: { subject_name, code, credits, hours } })
+    .then((data) => res.json(data))
+    .catch((err) => res.json({ message: err }));
+});
+
+subject_routes.delete('/:subjectId', (req, res)=>{
+  const { subjectId } = req.params;
+  subject_model
+        .deleteOne({ _id: subjectId })
+        .then((data) => res.json(data))
+        .catch((err) => res.json({message: err}));
+});
 
 module.exports = subject_routes
