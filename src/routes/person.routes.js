@@ -11,7 +11,7 @@ const person_routes = express.Router();
 // DELETE{id} : Eliminar registro existente : Recibe Parametro (id)
 
 person_routes.post("/person", (req, res) => {
-  person_model = person_model(req.body);
+  new_person = person_model(req.body);
   new_person
     .save()
     .then((data) => {
@@ -22,7 +22,7 @@ person_routes.post("/person", (req, res) => {
     });
 });
 
-person_routes.get("/", (req, res) => {
+person_routes.get("/person", (req, res) => {
     person_model
     .find()
     .then((data) => {
@@ -33,27 +33,27 @@ person_routes.get("/", (req, res) => {
       });
 });
 
-subject_routes.get('/:subjectId', (req, res)=>{
-  const { subjectId } = req.params;
-  subject_model
-      .findById(subjectId)
-      .then((data) => res.json(data))
-      .catch((err) => res.json({message: err}));
+person_routes.get("/person/:personId", (req, res) => {
+  const { personId } = req.params;
+  person_model
+    .findById(personId)
+    .then((data) => res.json(data))
+    .catch((err) => res.json({message: err}));
 });
 
-subject_routes.put('/:subjectId', (req, res)=>{
-  const { subjectId } = req.params;
-  const { subject_name, code, credits, hours } = req.body;
-  subject_model
-    .updateOne({ _id: subjectId }, { $set: { subject_name, code, credits, hours } })
+person_routes.put("/person/:personId", (req, res) => {
+  const { personId } = req.params;
+  const { username, lastname, age, email } = req.body;
+  person_model
+    .updateOne({ _id: personId }, { $set: { username, lastname, age, email } })
     .then((data) => res.json(data))
     .catch((err) => res.json({ message: err }));
 });
 
-subject_routes.delete('/:subjectId', (req, res)=>{
-  const { subjectId } = req.params;
-  subject_model
-        .deleteOne({ _id: subjectId })
+person_routes.delete("/person/:personId", (req, res) => {
+  const { personId } = req.params;
+  person_model
+        .deleteOne({ _id: personId })
         .then((data) => res.json(data))
         .catch((err) => res.json({message: err}));
 });

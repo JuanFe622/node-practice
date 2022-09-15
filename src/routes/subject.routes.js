@@ -25,30 +25,29 @@ subject_routes.get('/', (req, res)=>{
       });
 });
 
-person_routes.get("/:personId", (req, res) => {
-  const { personId } = req.params;
-  person_model
-    .findById(personId)
-    .then((data) => res.json(data))
-    .catch((err) => res.json({message: err}));
+subject_routes.get('/:subjectId', (req, res)=>{
+  const { subjectId } = req.params;
+  subject_model
+      .findById(subjectId)
+      .then((data) => res.json(data))
+      .catch((err) => res.json({message: err}));
 });
 
-person_routes.put("/:personId", (req, res) => {
-  const { personId } = req.params;
-  const { username, lastname, age, email } = req.body;
-  person_model
-    .updateOne({ _id: personId }, { $set: { username, lastname, age, email } })
+subject_routes.put('/:subjectId', (req, res)=>{
+  const { subjectId } = req.params;
+  const { subject_name, code, credits, hours } = req.body;
+  subject_model
+    .updateOne({ _id: subjectId }, { $set: { subject_name, code, credits, hours } })
     .then((data) => res.json(data))
     .catch((err) => res.json({ message: err }));
 });
 
-person_routes.delete("/:personId", (req, res) => {
-  const { personId } = req.params;
-  person_model
-        .deleteOne({ _id: personId })
+subject_routes.delete('/:subjectId', (req, res)=>{
+  const { subjectId } = req.params;
+  subject_model
+        .deleteOne({ _id: subjectId })
         .then((data) => res.json(data))
         .catch((err) => res.json({message: err}));
 });
-
 
 module.exports = subject_routes

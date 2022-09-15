@@ -1,20 +1,31 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const app = express();
-
 require("dotenv").config();
-const port = 5000 || process.env.PORT;
+const personRoute = require("./src/routes/person.routes");
+
+//Puerto de conexión
+const app = express();
+const port = 3000;
+
 
 app.listen(port, () => {
   console.log("Running in the port ", port);
 });
 
+//middlewares
+app.use(express.json());
+app.use("/api", personRoute);
+
+//Rutas del proyecto
+app.get('/',(req,res) =>res.send('Welcome to my API'));
+
+//Conexión MongoDB
 mongoose
-  .connect(process.env.CONNECTION_STRING_MONGODB)
+  .connect(process.env.MONGODB_CONNECTION_STRING)
   .then(() => {
     console.log("Successful connection with MongoDB");
   })
-  .catch(() => {
+  .catch((err) => {
     console.log(err);
   });
 
